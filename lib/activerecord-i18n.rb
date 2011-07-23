@@ -9,7 +9,5 @@ module ActiveRecord::I18n
 
 end
 
-# ActiveSupport.on_load(:active_record) do
-  ActiveRecord::Base.send :include, ActiveRecord::I18n::AttributeMethods
-  ActiveRecord::Base.send :include, ActiveRecord::I18n::Serialize
-# end
+ActiveRecord::Base.send :include, ActiveRecord::I18n::AttributeMethods
+ActiveRecord::Base.send :include, ActiveRecord::I18n::Serialize
