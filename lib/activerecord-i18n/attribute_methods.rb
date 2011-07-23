@@ -36,22 +36,46 @@ module ActiveRecord::I18n::AttributeMethods
       @localized_proxy_class ||= begin
         klass = Class.new(ActiveRecord::I18n::AttributeMethods::Proxy)
 
-        localized_columns.each do |column, locales|
+        columns_with_fallbacks = {}
+        if I18n.respond_to?(:fallbacks) and I18n.fallbacks
+          localized_columns.each do |column_name, locales|
+            fallbacks_map = Sorter.new
+
+            locales.each do |locale|
+              f = I18n.fallbacks[locale][1..-1].uniq
+              f.delete_if { |l| !locales.include?(l) }
+              fallbacks_map[locale] = f
+            end
+
+            fallback_order = fallbacks_map.tsort
+            fallback_order.map! do |locale|
+              [locale, fallbacks_map[locale][0]]
+            end
+
+            columns_with_fallbacks[column_name] = fallback_order
+          end
+
+        else
+          localized_columns.each do |column_name, locales|
+            locales = locales.dup
+            locales.delete(:root)
+            locales = [:root] + locales
+            fallback_order = locales.map do |l|
+              [l, (l == :root ? nil : :root)]
+            end
+
+            columns_with_fallbacks[column_name] = fallback_order
+          end
+
+        end
+
+
+        columns_with_fallbacks.each do |column, locales|
 
           l_reader  = []
           f_reader  = []
           writer    = []
           fallbacks = []
-
-          if I18n.respond_to?(:fallbacks)
-            # tsort the locales
-          else
-            locales.delete(:root)
-            locales = [:root] + locales
-            locales = locales.map do |l|
-              [l, (l == :root ? nil : :root)]
-            end
-          end
 
           locales.each do |(l, fallback)|
             c = l.to_s.gsub('-', '_')
@@ -165,6 +189,20 @@ module ActiveRecord::I18n::AttributeMethods
   end
   memoize :localize
   alias l localize
+
+  class Sorter < Hash
+
+    require 'tsort'
+
+    include TSort
+
+    alias tsort_each_node each_key
+
+    def tsort_each_child(node, &block)
+      fetch(node).each(&block)
+    end
+
+  end
 
   class Proxy
 
