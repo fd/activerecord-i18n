@@ -2,8 +2,6 @@ module ActiveRecord::I18n::AttributeMethods
 
   extend ActiveSupport::Memoizable
 
-  RECOGNIZE_I18N_COLUMN = /^(.+)_l_(?:([a-z]{2,})(?:_([a-z]{2,}))?)$/
-
   def self.included(base)
     base.extend ClassMethods
     class << base
@@ -23,10 +21,9 @@ module ActiveRecord::I18n::AttributeMethods
         columns = {}
 
         column_names.each do |name|
-          next unless name.to_s =~ RECOGNIZE_I18N_COLUMN
+          base, locale = ActiveRecord::I18n::Inference.parse_i18n_column_name(name)
 
-          base   = $1
-          locale = [$2, $3.try(:upcase)].compact.join('-').to_sym
+          next unless base and locale
 
           (columns[base] ||= []).push(locale)
         end
@@ -57,7 +54,7 @@ module ActiveRecord::I18n::AttributeMethods
           end
 
           locales.each do |(l, fallback)|
-            c = l.to_s.gsub('-', '_').downcase
+            c = l.to_s.gsub('-', '_')
 
             l_reader << "when #{l.inspect} then @object.#{column}_l_#{c}"
 
@@ -72,7 +69,7 @@ module ActiveRecord::I18n::AttributeMethods
             STR
 
             if fallback
-              f = fallback.to_s.gsub('-', '_').downcase
+              f = fallback.to_s.gsub('-', '_')
               fallbacks.push <<-STR
                 unless @object.#{column}_l_#{c}.nil?
                   @object.#{column}_f_#{c} = @object.#{column}_l_#{c}

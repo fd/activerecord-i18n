@@ -5,31 +5,31 @@ ActiveRecord::Base.establish_connection(
 ActiveRecord::Base.connection.create_table(:articles) do |t|
   t.string :title_l_root
   t.string :title_f_root
-  t.string :title_l_nl_be
-  t.string :title_f_nl_be
-  t.string :title_l_nl_nl
-  t.string :title_f_nl_nl
+  t.string :title_l_nl_BE
+  t.string :title_f_nl_BE
+  t.string :title_l_nl_NL
+  t.string :title_f_nl_NL
 
   t.integer :rating_l_root
   t.integer :rating_f_root
-  t.integer :rating_l_nl_be
-  t.integer :rating_f_nl_be
-  t.integer :rating_l_nl_nl
-  t.integer :rating_f_nl_nl
+  t.integer :rating_l_nl_BE
+  t.integer :rating_f_nl_BE
+  t.integer :rating_l_nl_NL
+  t.integer :rating_f_nl_NL
 
   t.boolean :published_l_root
   t.boolean :published_f_root
-  t.boolean :published_l_nl_be
-  t.boolean :published_f_nl_be
-  t.boolean :published_l_nl_nl
-  t.boolean :published_f_nl_nl
+  t.boolean :published_l_nl_BE
+  t.boolean :published_f_nl_BE
+  t.boolean :published_l_nl_NL
+  t.boolean :published_f_nl_NL
 
   t.text :settings_l_root
   t.text :settings_f_root
-  t.text :settings_l_nl_be
-  t.text :settings_f_nl_be
-  t.text :settings_l_nl_nl
-  t.text :settings_f_nl_nl
+  t.text :settings_l_nl_BE
+  t.text :settings_f_nl_BE
+  t.text :settings_l_nl_NL
+  t.text :settings_f_nl_NL
 end
 
 class Article < ActiveRecord::Base

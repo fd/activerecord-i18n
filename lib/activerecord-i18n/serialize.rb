@@ -16,9 +16,13 @@ module ActiveRecord::I18n::Serialize
 
       if locales
         locales.each do |locale|
-          locale = locale.to_s.gsub('-','_').downcase
-          serialize_without_i18n("#{attr_name}_l_#{locale}", class_name)
-          serialize_without_i18n("#{attr_name}_f_#{locale}", class_name)
+          l = ActiveRecord::I18n::Inference.format_i18n_column_name(
+                attr_name, locale, false)
+          f = ActiveRecord::I18n::Inference.format_i18n_column_name(
+                attr_name, locale, true)
+
+          serialize_without_i18n(l, class_name)
+          serialize_without_i18n(f, class_name)
         end
       else
         serialize_without_i18n(attr_name, class_name)

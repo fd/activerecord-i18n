@@ -9,5 +9,7 @@ module ActiveRecord::I18n
 
 end
 
-ActiveRecord::Base.send :include, ActiveRecord::I18n::AttributeMethods
-ActiveRecord::Base.send :include, ActiveRecord::I18n::Serialize
+class ActiveRecord::Base
+  include ActiveRecord::I18n::AttributeMethods
+  include ActiveRecord::I18n::Serialize
+end

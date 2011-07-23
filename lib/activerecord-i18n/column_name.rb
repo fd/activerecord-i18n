@@ -1,6 +1,28 @@
+module ActiveRecord::I18n::Inference
+
+  RECOGNIZE_I18N_COLUMN = /^(.+)_l_(?:([a-z]{2,})(?:_([A-Z]{2,}))?)$/
+
+  def format_i18n_column_name(base, locale, fallback)
+    fallback = (fallback ? 'f' : 'l')
+    locale   = locale.to_s.gsub('-', '_')
+    :"#{base}_#{fallback}_#{locale}"
+  end
+
+  def parse_i18n_column_name(column_name)
+    if column_name.to_s =~ RECOGNIZE_I18N_COLUMN
+      locale = [$2, $3].compact.join('-').to_sym
+      [$1, locale]
+    end
+  end
+
+  extend self
+
+end
+
 class ActiveRecord::I18n::ColumnName
 
   extend ActiveSupport::Memoizable
+  include ActiveRecord::I18n::Inference
 
   DEFAULTS = { :fallback => true, :locale => nil }
 
@@ -25,8 +47,7 @@ class ActiveRecord::I18n::ColumnName
   end
 
   def for_locale(locale)
-    locale = locale.to_s.gsub('-', '_').downcase
-    :"#{@base}_#{@fallback ? 'f' : 'l'}_#{locale}"
+    self.format_i18n_column_name(@base, locale, @fallback)
   end
   memoize :for_locale
 
