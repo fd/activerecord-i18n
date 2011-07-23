@@ -1,10 +1,7 @@
 rvm:
   - 1.8.7
   - 1.9.2
-  - rbx
-  - rbx-2.0
   - ree
-  - jruby
 env:
   - ACTIVE_RECORD=2.3.8
   - ACTIVE_RECORD=2.3.12

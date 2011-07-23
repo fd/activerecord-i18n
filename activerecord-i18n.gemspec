@@ -9,8 +9,8 @@ Gem::Specification.new do |s|
   s.authors     = ["Simon Menke"]
   s.email       = ["simon.menke@gmail.com"]
   s.homepage    = "http://github.com/fd"
-  s.summary     = %q{TODO: Write a gem summary}
-  s.description = %q{TODO: Write a gem description}
+  s.summary     = %q{I18n for ActiveRecord.}
+  s.description = %q{Storing translated/localized data should not be hard.}
 
   s.rubyforge_project = "activerecord-i18n"
 
