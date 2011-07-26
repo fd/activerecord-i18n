@@ -37,7 +37,8 @@ module ActiveRecord::I18n::AttributeMethods
         klass = Class.new(ActiveRecord::I18n::AttributeMethods::Proxy)
 
         columns_with_fallbacks = {}
-        if I18n.respond_to?(:fallbacks) and I18n.fallbacks
+
+        if I18n.respond_to?(:fallbacks) and (I18n.fallbacks.any? or I18n.fallbacks.defaults.any?)
           localized_columns.each do |column_name, locales|
             fallbacks_map = Sorter.new
 
@@ -46,6 +47,8 @@ module ActiveRecord::I18n::AttributeMethods
               f.delete_if { |l| !locales.include?(l) }
               fallbacks_map[locale] = f
             end
+
+            fallbacks_map[:root] = []
 
             fallback_order = fallbacks_map.tsort
             fallback_order.map! do |locale|
