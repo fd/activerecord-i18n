@@ -157,10 +157,10 @@ module ActiveRecord::I18n::AttributeMethods
       end
 
       localized_columns.each do |column, locales|
-        set << :"_#{column}"
-        set << :"_#{column}="
-        set << :"#{column}"
-        set << :"#{column}="
+        set << "_#{column}"
+        set << "_#{column}="
+        set << "#{column}"
+        set << "#{column}="
 
         mod.module_eval <<-STR, __FILE__, __LINE__
           def _#{column}

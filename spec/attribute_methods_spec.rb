@@ -1,3 +1,5 @@
+require File.expand_path('../spec_helper', __FILE__)
+
 ActiveRecord::Base.establish_connection(
   :adapter  => "sqlite3",
   :database => ":memory:")

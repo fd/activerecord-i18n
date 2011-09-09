@@ -1,3 +1,5 @@
+require File.expand_path('../spec_helper', __FILE__)
+
 describe "ActiveRecord::I18n::ColumnName" do
 
   describe "#new(:title)" do
