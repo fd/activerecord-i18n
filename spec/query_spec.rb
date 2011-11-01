@@ -5,7 +5,7 @@ I18n::Backend::Simple.send(:include, I18n::Backend::Fallbacks)
 class Product < ActiveRecord::Base
 
   if respond_to?(:where)
-    scope :free, where(:price.l => 0)
+    scope :free, lambda{ where(:price.l => 0) }
   else
     named_scope :free, :conditions => { :price.l => 0 }
   end
