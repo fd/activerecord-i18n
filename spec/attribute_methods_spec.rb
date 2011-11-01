@@ -1,39 +1,5 @@
 require File.expand_path('../spec_helper', __FILE__)
 
-ActiveRecord::Base.establish_connection(
-  :adapter  => "sqlite3",
-  :database => ":memory:")
-
-ActiveRecord::Base.connection.create_table(:articles) do |t|
-  t.string :title_l_root
-  t.string :title_f_root
-  t.string :title_l_nl_BE
-  t.string :title_f_nl_BE
-  t.string :title_l_nl_NL
-  t.string :title_f_nl_NL
-
-  t.integer :rating_l_root
-  t.integer :rating_f_root
-  t.integer :rating_l_nl_BE
-  t.integer :rating_f_nl_BE
-  t.integer :rating_l_nl_NL
-  t.integer :rating_f_nl_NL
-
-  t.boolean :published_l_root
-  t.boolean :published_f_root
-  t.boolean :published_l_nl_BE
-  t.boolean :published_f_nl_BE
-  t.boolean :published_l_nl_NL
-  t.boolean :published_f_nl_NL
-
-  t.text :settings_l_root
-  t.text :settings_f_root
-  t.text :settings_l_nl_BE
-  t.text :settings_f_nl_BE
-  t.text :settings_l_nl_NL
-  t.text :settings_f_nl_NL
-end
-
 I18n::Backend::Simple.send(:include, I18n::Backend::Fallbacks)
 
 class Article < ActiveRecord::Base

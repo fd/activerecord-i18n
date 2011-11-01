@@ -2,8 +2,10 @@ rvm:
   - 1.8.7
   - 1.9.2
   - ree
-env:
-  - ACTIVE_RECORD=2.3.8
-  - ACTIVE_RECORD=2.3.14
-  - ACTIVE_RECORD=3.0.9
-  - ACTIVE_RECORD=3.1.0
+# script: "bundle exec rake spec:unit spec:acceptance features"
+gemfile:
+  - gemfiles/rails-2.3.8.gemfile
+  - gemfiles/rails-2.3.11.gemfile
+  - gemfiles/rails-2.3.14.gemfile
+  - gemfiles/rails-3.0.9.gemfile
+  - gemfiles/rails-3.1.0.gemfile

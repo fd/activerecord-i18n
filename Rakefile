@@ -8,4 +8,6 @@ RSpec::Core::RakeTask.new do |t|
     '-r', File.expand_path("../spec/spec_helper.rb", __FILE__)]
 end
 
+require 'appraisal'
+
 task :default => :spec

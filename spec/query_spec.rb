@@ -1,25 +1,5 @@
 require File.expand_path('../spec_helper', __FILE__)
 
-ActiveRecord::Base.establish_connection(
-  :adapter  => "sqlite3",
-  :database => ":memory:")
-
-ActiveRecord::Base.connection.create_table(:products) do |t|
-  t.string :name_l_root
-  t.string :name_f_root
-  t.string :name_l_nl_BE
-  t.string :name_f_nl_BE
-  t.string :name_l_nl_NL
-  t.string :name_f_nl_NL
-
-  t.integer :price_l_root
-  t.integer :price_f_root
-  t.integer :price_l_nl_BE
-  t.integer :price_f_nl_BE
-  t.integer :price_l_nl_NL
-  t.integer :price_f_nl_NL
-end
-
 I18n::Backend::Simple.send(:include, I18n::Backend::Fallbacks)
 
 class Product < ActiveRecord::Base

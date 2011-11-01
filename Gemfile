@@ -4,8 +4,9 @@ source "http://rubygems.org"
 gemspec
 
 gem 'rake', '0.8.7'
+gem "appraisal"
 gem 'rspec'
-gem 'activerecord', (ENV['ACTIVE_RECORD'] || '2.3.8')
+gem "activerecord", :require => false
 gem 'sqlite3'
 
 if RUBY_PLATFORM =~ /darwin/i
